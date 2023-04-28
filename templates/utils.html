@@ -86,11 +86,11 @@
 		{% endif %}
 		<div id="sub_filter">
 			{% if prefs.filters.contains(post.community) %}
-				<form action="/r/{{ post.community }}/unfilter?redirect={{ post.permalink }}" method="POST">
+				<form action="/r/{{ post.community }}/unfilter?redirect={{ post.permalink[1..] }}" method="POST">
 					<button class="unfilter">Unfilter</button>
 				</form>
 			{% else %}
-			<form action="/r/{{ post.community }}/filter?redirect={{ post.permalink }}" method="POST">
+			<form action="/r/{{ post.community }}/filter?redirect={{ post.permalink[1..] }}" method="POST">
 				<button class="filter">Filter</button>
 			</form>
 			{% endif %}
@@ -219,24 +219,15 @@
 		{% endif %}
 		<div id="sub_filter">
 			{% if prefs.filters.contains(post.community) %}
-				<form action="/r/{{ post.community }}/unfilter" method="POST">
-					<button class="unfilter" onclick="submitAndReload(event)">Unfilter</button>
+				<form action="/r/{{ post.community }}/unfilter?redirect=r/{{ post.community }}" method="POST">
+					<button class="unfilter">Unfilter</button>
 				</form>
 			{% else %}
-				<form action="/r/{{ post.community }}/filter" method="POST">
-					<button class="filter" onclick="submitAndReload(event)">Filter</button>
-				</form>
+			<form action="/r/{{ post.community }}/filter?redirect=r/{{ post.community }}" method="POST">
+				<button class="filter">Filter</button>
+			</form>
 			{% endif %}
-		</div>
-		
-		<script>
-			function submitAndReload(event) {
-				event.preventDefault();
-				const form = event.target.closest('form');
-				form.submit();
-				window.location.reload();
-			}
-		</script>		
+		</div>	
 	</p>
 	<h2 class="post_title">
 		{% if post.flair.flair_parts.len() > 0 %}
