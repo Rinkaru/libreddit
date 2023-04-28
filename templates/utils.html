@@ -218,12 +218,12 @@
 			{% endfor %}
 		{% endif %}
 		<div id="sub_filter">
-			{% if prefs.filters.contains(sub.name) %}
-				<form action="/r/{{ sub.name }}/unfilter" method="POST">
+			{% if prefs.filters.contains(post.community) %}
+				<form action="/r/{{ post.community }}/unfilter" method="POST">
 					<button class="unfilter" onclick="submitAndReload(event)">Unfilter</button>
 				</form>
 			{% else %}
-				<form action="/r/{{ sub.name }}/filter" method="POST">
+				<form action="/r/{{ post.community }}/filter" method="POST">
 					<button class="filter" onclick="submitAndReload(event)">Filter</button>
 				</form>
 			{% endif %}
