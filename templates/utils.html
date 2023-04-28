@@ -84,6 +84,17 @@
 			{% endfor %}
 		</span>
 		{% endif %}
+		<div id="sub_filter">
+			{% if prefs.filters.contains(post.community) %}
+				<form action="/r/{{ post.community }}/unfilter?redirect={{ post.permalink }}" method="POST">
+					<button class="unfilter">Unfilter</button>
+				</form>
+			{% else %}
+			<form action="/r/{{ post.community }}/filter?redirect={{ post.permalink }}" method="POST">
+				<button class="filter">Filter</button>
+			</form>
+			{% endif %}
+		</div>
 	</p>
 	<h1 class="post_title">
 		{{ post.title }}
@@ -206,6 +217,26 @@
 			</span>
 			{% endfor %}
 		{% endif %}
+		<div id="sub_filter">
+			{% if prefs.filters.contains(sub.name) %}
+				<form action="/r/{{ sub.name }}/unfilter" method="POST">
+					<button class="unfilter" onclick="submitAndReload(event)">Unfilter</button>
+				</form>
+			{% else %}
+				<form action="/r/{{ sub.name }}/filter" method="POST">
+					<button class="filter" onclick="submitAndReload(event)">Filter</button>
+				</form>
+			{% endif %}
+		</div>
+		
+		<script>
+			function submitAndReload(event) {
+				event.preventDefault();
+				const form = event.target.closest('form');
+				form.submit();
+				window.location.reload();
+			}
+		</script>		
 	</p>
 	<h2 class="post_title">
 		{% if post.flair.flair_parts.len() > 0 %}
